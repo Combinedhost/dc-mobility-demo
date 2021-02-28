@@ -19,6 +19,7 @@ class RatingSeeder extends Seeder
             'rated_by_user_id' => 2,
             'user_id' => 1
         ]);
+
         \App\Models\Rating::create([
             'rating' => 8,
             'rated_by_user_id' => 1,

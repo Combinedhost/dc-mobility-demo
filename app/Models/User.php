@@ -8,10 +8,11 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use Authenticatable, Authorizable, HasFactory;
+    use HasApiTokens, Authenticatable, Authorizable, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +20,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'name', 'email', 'password'
     ];
 
     /**
@@ -35,6 +36,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function rating_history(){
         return $this->hasMany(Rating::class);
+    }
+
+    public function average_rating(){
+        return $this->hasMany(Rating::class)->selectRaw('avg(rating) as value, user_id')
+            ->groupBy('user_id');
     }
 
 }

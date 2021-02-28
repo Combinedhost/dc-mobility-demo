@@ -2,33 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 
 class UserController extends Controller
 {
+
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function __construct()
+    public function index()
     {
-        //
-    }
-
-    public function index(){
-        return 'create';
-    }
-
-    public function create(Request $request){
-        return $request->all();
-    }
-
-    public function edit($id){
-        return $id;
-    }
-
-    public function destroy(){
-        return 'create';
+        try {
+            return UserResource::collection(User::all());
+        } catch (\Exception $exception) {
+            return response()->json([
+                'message' => 'Some error occurred while retrieving users'
+            ], 500);
+        }
     }
 }

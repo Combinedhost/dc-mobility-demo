@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -14,15 +16,22 @@ class UserSeeder extends Seeder
     public function run()
     {
 
-        \App\Models\User::create([
-            'name' => 'test1',
-            'email' => 'test1@gmail.com',
-            "password" => 'test1234'
+        \App\Models\User::insert([
+            [
+                'name' => 'Gowtham',
+                'email' => 'gowtham@layorz.com',
+                "password" => Hash::make('12345678'),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Siddhartha',
+                'email' => 'siddhartha@gmail.com',
+                "password" => Hash::make('12345678'),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]
         ]);
-        \App\Models\User::create([
-            'name' => 'test2',
-            'email' => 'test2@gmail.com',
-            "password" => 'test1234'
-        ]);
+
     }
 }

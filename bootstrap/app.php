@@ -60,7 +60,7 @@ $app->singleton(
 */
 
 $app->configure('app');
-
+$app->configure('auth');
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -79,6 +79,10 @@ $app->configure('app');
  $app->routeMiddleware([
      'auth' => App\Http\Middleware\Authenticate::class,
  ]);
+
+$app->routeMiddleware([
+    'check.auth' => App\Http\Middleware\AuthMiddleware::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -107,6 +111,7 @@ $app->configure('app');
 */
 $app->register(Laravel\Passport\PassportServiceProvider::class);
 $app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
+$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',

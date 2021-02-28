@@ -13,16 +13,13 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+$router->post('/login', ['as' => 'login', 'uses' => 'AuthController@login']);
+$router->post('/register', ['as' => 'register', 'uses' => 'AuthController@register']);
 
-//$router->group(['middleware' => 'auth'], function () use ($router) {
+$router->group(['middleware' => 'check.auth'], function () use ($router) {
+    $router->post('/logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
     $router->get('/user', ['as' => 'user_index', 'uses' => 'UserController@index']);
-    $router->post('user', ['as' => 'user_create', 'uses' => 'UserController@create']);
-    $router->put('user/{id}', ['as' => 'user_edit', 'uses' => 'UserController@edit']);
-    $router->delete('user/{id}', ['as' => 'user_destroy', 'uses' => 'UserController@destroy']);
-//});
-$router->post('/rating', ['as' => 'post_rating', 'uses' => 'RatingController@create']);
-$router->get('/rating/{id}', ['as' => 'get_user_rating', 'uses' => 'RatingController@getIndividualRating']);
-$router->get('/rating', ['as' => 'get_all_users_rating', 'uses' => 'RatingController@getAllUserRating']);
+
+    $router->post('/ratings', ['as' => 'post_rating', 'uses' => 'RatingController@postRating']);
+    $router->get('/ratings', ['as' => 'get_user_rating', 'uses' => 'RatingController@index']);
+});
