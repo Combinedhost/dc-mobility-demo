@@ -38,9 +38,15 @@ class RatingController extends Controller
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function postRating(Request $request)
     {
+        $this->validate($request, [
+            'rating' => 'required|numeric|between:1,10',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
         try {
             if ($request->input('user_id') == auth()->id()) {
                 return response()->json([
