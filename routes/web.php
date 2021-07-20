@@ -14,15 +14,22 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+   $html = '<div><p>Dear {user-first-name} </p><p>Congratulations on joining DC Mobility!
+        We\'re excited to have you with us.</p>
+        <p>Your User ID: {user_id}</p>
+        <p>We’ll send you another email with your tracking number as soon as your order has been shipped</p>
+        <p>Here’s your address details:</p>
+        <p>Email: {email}</p>
+        <p>Phone: {phone}</p>
+        <p>Address:  {address}</p>
+        <p>Thanks,</p>
+        <p>Team DC Mobility</p>
+        </div>';
+    return $html;
 });
 
-//$router->group(['middleware' => 'auth'], function () use ($router) {
-    $router->get('/user', ['as' => 'user_index', 'uses' => 'UserController@index']);
-    $router->post('user', ['as' => 'user_create', 'uses' => 'UserController@create']);
-    $router->put('user/{id}', ['as' => 'user_edit', 'uses' => 'UserController@edit']);
-    $router->delete('user/{id}', ['as' => 'user_destroy', 'uses' => 'UserController@destroy']);
-//});
-$router->post('/rating', ['as' => 'post_rating', 'uses' => 'RatingController@create']);
-$router->get('/rating/{id}', ['as' => 'get_user_rating', 'uses' => 'RatingController@getIndividualRating']);
-$router->get('/rating', ['as' => 'get_all_users_rating', 'uses' => 'RatingController@getAllUserRating']);
+
+$router->post('api/users/register',  ['uses' => 'UserController@register']);
+$router->post('api/send-email',  ['uses' => 'EmailController@sendEmail']);
+$router->post('api/templates/create',  ['uses' => 'TemplateController@addTemplate']);
+

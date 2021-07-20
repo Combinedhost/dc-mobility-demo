@@ -19,7 +19,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'user_id', 'first_name', 'last_name', 'email', 'phone', 'address_line_1',
+        'address_line_2', 'city', 'state', 'country', 'postcode'
     ];
 
     /**
@@ -30,11 +31,4 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
-
-    protected $table="users";
-
-    public function rating_history(){
-        return $this->hasMany(Rating::class);
-    }
-
 }
