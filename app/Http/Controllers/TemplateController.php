@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Country;
 use App\Models\Template;
 use App\Models\User;
@@ -22,32 +23,28 @@ class TemplateController extends Controller
         //
     }
 
-    public function addTemplate(Request $request){
+    public function addTemplate(Request $request)
+    {
         try {
-            $validator= Validator::make($request->all(), [
+
+            $validator = Validator::make($request->all(), [
                 'title' => ['required', 'unique:templates'],
                 'code' => ['required']
             ]);
             if ($validator->fails()) {
                 return $validator->errors();
             }
+
             DB::beginTransaction();
-            $template = Template::create([
-                'title' => $request->input('title'),
-                'code' => $request->input('code')
-            ]);
+            Template::create($request->all());
             DB::commit();
-            return response()->json($template);
-        }catch (ModelNotFoundException $exception){
-            DB::rollBack();
-            return response()->json([
-                'Data not found'
-            ],404);
-        }catch (\Exception $exception){
+
+            return response()->json(['message' => 'Template created successfully!']);
+        } catch (\Exception $exception) {
             DB::rollBack();
             return response()->json([
                 'Server Error'
-            ],500);
+            ], 500);
 
         }
 

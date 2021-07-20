@@ -28,7 +28,6 @@ class UserController extends Controller
     public function register(Request $request)
     {
         try {
-            DB::beginTransaction();
             $validator = Validator::make($request->all(), [
                 'first_name' => ['required'],
                 'last_name' => ['required'],
@@ -44,26 +43,28 @@ class UserController extends Controller
             if ($validator->fails()) {
                 return $validator->errors();
             }
+
+            DB::beginTransaction();
+            $userData = $request->all();
+
             $code = Country::where('name', $request->input('country'))->first()->code;
             $id = User::exists() ? User::latest()->first()->id : 0;
-            $userData = $request->all();
             $userData['user_id'] = $code . rand(100, 1000) . ++$id;
+
             $user = User::create($userData);
+
             $email = new EmailController();
             $message = $email->registerEmail($user->user_id);
-            if ($message) {
-                DB::commit();
-            } else {
+            if (!$message) {
                 DB::rollBack();
+                return response()->json([
+                    'message' => 'Error occured while sending email!'
+            ]);
             }
-            return response()->json($user);
-        } catch (ModelNotFoundException $exception) {
-            DB::rollBack();
-            return response()->json([
-                'message' => 'Data not found'
-            ], 404);
+            DB::commit();
 
-        } catch (\Exception $exception) {
+            return response()->json($user);
+        }  catch (\Exception $exception) {
             DB::rollBack();
             return response()->json([
                 'message' => 'Server Error'

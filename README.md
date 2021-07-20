@@ -1,24 +1,48 @@
-# Lumen PHP Framework
+Documentation link:
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
+https://documenter.getpostman.com/view/12152243/TzsWt9pb
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+Please follow the below instructions before testing api:
 
-## Official Documentation
+1)Run php artisan migrate:fresh command.
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+2)Run php artisan db:seed command.
 
-## Contributing
+3)Add the following variables to the env:
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=yourname@gmail.com
+MAIL_NAME=your-name
+MAIL_PASSWORD=your-email-password
+MAIL_ENCRYPTION=tls
 
-## Security Vulnerabilities
+ADMIN_USERNAME=admin_name
+ADMIN_MAIL=admin@gmail.com
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+Note:
 
-## License
+Dynamic variable usage syntax in template: {dynamic_variable}
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Dynamic variables used:
+
+* first_name
+
+* last_name
+
+* email
+
+* phone
+
+* address_line_1
+
+* address_line_2
+
+* city
+
+* state
+
+* country
+
+* postcode
