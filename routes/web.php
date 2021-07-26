@@ -13,6 +13,9 @@
 |
 */
 
+$router->get('/',  function (){
+    return "welcome";
+});
 $router->post('api/users/register',  ['uses' => 'UserController@register']);
 $router->post('api/templates/create',  ['uses' => 'TemplateController@addTemplate']);
 $router->post('api/send-email',  ['uses' => 'EmailController@sendEmail']);
